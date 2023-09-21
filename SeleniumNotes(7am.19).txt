@@ -1,0 +1,181 @@
+Selenium WebDriver(Interface)
+   -->It provides a way to control the Browser.
+   -->It is the core interface of selenium,without which we cannot start automation because it contains main browser controlling methods.
+   -->It is an interface which has 11 abstract methods.   namely...
+
+      1. get("") -->It is used to navigate particular URL(website) and wait till page load.
+      2. getTitle() -->It will capture the current started page heading and later it will be saved in a variable and next
+      it will be published in the console.
+      3. getCuurentUrl() -->It fetches the URL of the opened application.
+      4. getPageSource() -->It returns the source code of the page which stored as string.
+      5. getWindowHandle() -->It is used to handle child windows.
+      6. getWindowHandles() -->It is used to store all the opened window handles in the set data structure.
+      7. close() -->It is used to close the browser window currently in focus.
+      8. quit() -->It is used to close all the entire browser session with all its tabs and windows.
+      9. navigate() -->It is used to perform different operations such as backward,forward,refresh,wait....etc in browsers history.
+      10. manage() -->It is a method that returns instance/object of options interface.
+      11. switchTo() -->It allows users to switch to a particular frame using frameId/window using  session Id.
+
+Method Implementation
+
+Ex:-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Options;
+import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class WebDriverMethods {
+
+	public static void main(String[] args) {
+
+     //Launching empty browser
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+
+		//launching application
+		driver.get("https://www.amazon.in/");
+	
+		//fetches the title of current page
+	    String title = driver.getTitle();
+	    System.out.println(title);
+	
+	    //fetches url of the application
+	    String url = driver.getCurrentUrl();
+	    System.out.println(url);
+	    
+	    //fetches source code of current page
+	    String source = driver.getPageSource();
+     	//System.out.println(source);
+	
+	    //maximize the window
+	   /*   Options opt = driver.manage();
+	      Window win = opt.window();
+	      win.maximize();*/
+	   driver.manage().window().maximize();
+	
+	   //minimize the window
+     	//driver.manage().window().minimize();
+     	
+	   //fullscreen the window
+     	// driver.manage().window().fullscreen();
+     	
+     	//close the single window 
+     //	driver.close();
+     	
+     	//closes all the windows including browser
+     //	driver.quit();
+     	
+	}
+}
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class NavigationMethod {
+
+	public static void main(String[] args) throws Throwable {
+		//Launching empty browser
+				WebDriverManager.chromedriver().setup();
+				WebDriver driver=new ChromeDriver();
+
+				//launching application
+				//driver.get("https://www.amazon.in/");
+	     driver.navigate().to("https://www.amazon.in/");
+	    
+	     Thread.sleep(2000);
+	     driver.navigate().back();
+	   
+	     Thread.sleep(2000);
+	     driver.navigate().forward();
+	    
+	     Thread.sleep(2000);
+	     driver.navigate().refresh();
+	
+}}
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                       LOCATORS
+-->Locators are used to get the location of the WebElements in a webpage (html document).
+-->Based on the requirement we need to find the exact location of the webelements.
+-->All the locators are static methods of "By" class.
+    This "By" class is an abstract class,so it is not possible to create the object.(If we try we get                                                                                                 C.T.E)
+    Hence the only way to access the locators is by using *classname.method(locators--static methods)
+
+
+Types of Locators
+-----------------
+1) id()
+2) name()
+3) classname()
+4) linktext()
+5) partialLinkText()
+6) cssSelector()
+7) xpath()
+8) tagname()
+
+1. id(String idvalue)
+   ------------------
+-->It is locator(static method) present in a "By class",which is used to locate the webelement by using id attribute value.
+===========================================================================================================
+2. name(String namevalue)
+   ----------------------
+-->It is a locator(static method) present in a "By class",which is used to locate the webelement by using name attribute vaue.
+==========================================================================================================
+3. classname(String clasvalue)
+   ---------------------------
+-->It is a locator(static method) present in a "By class",which is used to locate the webelement by using class attribute value.
+Ex:- If class=abc def ghi jkl 123xyz     abc -
+2....class3,class4
+note**
+If class attribute is having spaces than it is considered as multiple classes.
+===========================================================================================================  
+
+Example:-
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Locators {
+
+	public static void main(String[] args) throws Throwable {
+		
+		//Launching Browser
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		
+		//Launching Application
+        driver.get("https://demo.actitime.com/login.do");
+
+        //Maximizing window
+       driver.manage().window().maximize();
+       
+       //passing username value to webpage using(id locator)
+      driver.findElement(By.id("username")).sendKeys("admin");
+	
+      Thread.sleep(2000);
+      //passing password value to webpage using(name locator)
+      driver.findElement(By.name("pwd")).sendKeys("manager");
+      
+      //got uniqueness but not working ...CAn take other locator
+      //driver.findElement(By.className("textField pwdfield")).sendKeys("manager");
+	
+      //to select checkbox 
+      driver.findElement(By.id("keepLoggedInCheckBox")).click();
+      
+      //to click login button
+	//driver.findElement(By.id("loginButton")).click();
+	//driver.findElement(By.id("loginButtonContainer")).click();
+      
+      //using classname() locator
+      driver.findElement(By.className("initial")).click();
+	}
+
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ 
